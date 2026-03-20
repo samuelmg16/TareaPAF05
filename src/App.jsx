@@ -5,7 +5,8 @@ import {
   getAulas,
   eliminarAula,
   crearAula,
-  getCentros
+  getCentros,
+  asignarAula
 } from "./services/aulasService";
 
 function App() {
@@ -79,13 +80,13 @@ function App() {
   async function agregarAula(e) {
     e.preventDefault();
     iniciarGuardado();
-    const tareaCreada = await crearAula(
+    const aulaCreada = await crearAula(
       nuevaAula.numeroAula,
       nuevaAula.comentarios,
-      nuevaAula.esAulaOrdenadores,
-      nuevaAula.centro
+      nuevaAula.esAulaOrdenadores
     );
-    setListadoAulas([...listadoAulas, tareaCreada]);
+    await asignarAula(nuevaAula.centro, aulaCreada.id);
+    setListadoAulas([...listadoAulas, aulaCreada]);
     setNuevaAula({
       numeroAula: "",
       comentarios: "",
